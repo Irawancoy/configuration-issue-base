@@ -79,7 +79,7 @@ public class ApplicationConfig {
         .userDetailsService(new InMemoryUserDetailsManager(
             User.builder()
                 .username(prop.getSystemUsername())
-                .password(prop.getSystemPassword())
+                .password(passwordEncoder.encode(prop.getSystemPassword())) 
                 .authorities("SYSTEM", "ADMIN")
                 .build(),
             User.builder()
@@ -102,14 +102,20 @@ public class ApplicationConfig {
     return http.build();
   }
 
-  @Bean
-  public ECKey ecJwk() throws IOException, ParseException {
-    try (var in = new FileInputStream(ResourceUtils.getFile("classpath:key/ES512.json"))) {
-      return ECKey.parse(new String(in.readAllBytes(), StandardCharsets.UTF_8));
-    }
-  }
+  // @Bean
+  // public ECKey ecJwk() throws IOException, ParseException {
+  //   try (var in = new FileInputStream(ResourceUtils.getFile("classpath:key/ES512.json"))) {
+  //     return ECKey.parse(new String(in.readAllBytes(), StandardCharsets.UTF_8));
+  //   }
+  // }
 
   @Bean
+public ECKey ecJwk() throws IOException, ParseException {
+    try (var in = new FileInputStream("/opt/resources/key/ES512.json")) {
+        return ECKey.parse(new String(in.readAllBytes(), StandardCharsets.UTF_8));
+    }
+}
+@Bean
   public JWKSource<SecurityContext> jwkSource(ECKey jwk) {
     return new ImmutableJWKSet<>(new JWKSet(jwk));
   }

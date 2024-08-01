@@ -3,7 +3,7 @@
 #-----------------------------------
 
 server:
-  port: 9091
+  port: 8080
 
 #-----------------------------------
 --- # Authentication
@@ -13,7 +13,7 @@ application:
   security:
     uuid: b592691e-df3f-4049-86d5-50bdce269354
     strength: 8
-    system-username: SYSTEM
+    system-uername: SYSTEM
     system-password: $2a$16$Pjg5ZRu.I2TsN5W38PMyQuYBorSrwmRKa/4fc01nEZl0FSOQeou3C # SYSADM
 
 #-----------------------------------
@@ -23,8 +23,8 @@ application:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/notes-app
-    username: user
-    password: password
+    username: postgres
+    password: 12345
   jpa:
     hibernate:
       ddl-auto: create-drop
